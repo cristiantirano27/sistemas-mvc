@@ -28,7 +28,7 @@
         </div>
       </nav>
 
-      <!-- TABLA -->
+      <!-- LISTA -->
       <section id="lista">
         <h5>Listado de Equipos</h5>
         <hr>
