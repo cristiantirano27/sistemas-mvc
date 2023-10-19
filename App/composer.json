@@ -1,0 +1,15 @@
+{
+    "name": "cristian_tirano/app",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "cristiantirano27",
+            "email": "catirano5@misena.edu.co"
+        }
+    ],
+    "require": {}
+}
