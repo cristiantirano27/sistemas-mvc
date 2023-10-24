@@ -5,12 +5,12 @@ use app\core\Application;
 
 $app = new Application();
 
-$app->setRoute("/", "loadHomePage");
-$app->setRoute("/admin", "loadAdminPage");
+$app->setRoute("/", "home");
+$app->setRoute("/admin", "admin");
 
-$return = $app->run();
+$callback = $app->run();
 
-
+echo $callback;
 
 ?>
 <br>
