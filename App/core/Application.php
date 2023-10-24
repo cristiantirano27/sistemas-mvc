@@ -5,10 +5,12 @@ namespace app\core;
 class Application
 {
     protected Router $router;
+    protected Server $server;
 
     public function __construct() 
     {
-        $this->router = new Router();
+        $this->server = new Server();
+        $this->router = new Router($this->server);
     }
 
     public function setRoute(string $url, string $callback) 
@@ -18,7 +20,7 @@ class Application
 
     public function run()
     {
-        return $this->router->getPath();    
+        return $this->router->run();    
     }
 
 }
