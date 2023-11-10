@@ -80,7 +80,7 @@ class mainModel
         return $cadena;
     }
 
-    // Funcion verificar datos
+    // Función verificar datos
     protected static function verificar_datos($filtro, $cadena) : Returntype {
         if (preg_match("/^".$filtro."$/", $cadena)) {
             return false;
@@ -89,7 +89,7 @@ class mainModel
         }
     }
 
-    // Funcion verificar fechas
+    // Función verificar fechas
     protected static function verificar_fecha($fecha) {
         $valores = explode('-', $fecha);
         if (count($valores) === 3 && checkdate($valores[1], $valores[2], $valores[0])) {
@@ -97,6 +97,77 @@ class mainModel
         } else {
             return true;
         }
+    }
+
+    // Función paginador de tablas
+    protected static function paginador_tablas($pagina, $Npaginas, $url, $botones) { 
+        $tabla = '<nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                 ';
+
+        if ($pagina == 1) {
+            $tabla.='<li class="page-item disabled">
+                        <a class="page-link" tabindex="-1">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                     </li>';
+        } else {
+            $tabla.='<li class="page-item">
+                        <a class="page-link" href="'.$url.'1/" tabindex="-1">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                     </li>
+                     <li class="page-item">
+                        <a class="page-link" href="'.$url.($pagina-1).'/" tabindex="-1">
+                            Anterior
+                        </a>
+                     </li>';
+        }
+
+        $ci = 0;
+        for ($i=$pagina; $i < $Npaginas; $i++) { 
+            if ($ci >= $botones) {
+                break;
+            }
+
+            if ($pagina == $i) {
+                $tabla.='<li class="page-item">
+                            <a class="page-link active" href="'.$url.$i.'/" tabindex="-1">
+                                '.$i.'
+                            </a>
+                         </li>';
+            } else {
+                $tabla.='<li class="page-item">
+                            <a class="page-link " href="'.$url.$i.'/" tabindex="-1">
+                                '.$i.'
+                            </a>
+                         </li>';
+            }   
+        }
+        
+        if ($pagina == $Npaginas) {
+            $tabla.='<li class="page-item disabled">
+                        <a class="page-link" tabindex="-1">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                     </li>';
+        } else {
+            $tabla.='
+                    <li class="page-item">
+                        <a class="page-link" href="'.$url.($pagina+1).'/" tabindex="-1">
+                            Siguiente
+                        </a>
+                    </li>
+                     <li class="page-item">
+                        <a class="page-link" href="'.$url.$Npaginas.'/" tabindex="-1">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                     </li>';
+        }
+
+        $tabla.=' </ul>
+                </nav>';
+        return $tabla;
     }
 
 }
