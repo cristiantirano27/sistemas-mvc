@@ -9,7 +9,7 @@
 </head>
 <body>
 	<?php
-		$peticionesAjax = false;
+		$peticionAjax = false;
 		require_once "./controllers/viewsController.php";
 		$IV = new viewsController();
 
