@@ -81,7 +81,7 @@ class mainModel
     }
 
     // Función verificar datos
-    protected static function verificar_datos($filtro, $cadena) : Returntype {
+    protected static function verificar_datos($filtro, $cadena) {
         if (preg_match("/^".$filtro."$/", $cadena)) {
             return false;
         } else {
