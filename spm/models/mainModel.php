@@ -16,7 +16,7 @@ class mainModel
     }
 
     // Función ejecutar consultas simples
-    protected static function ejecutar_consulta_simples($consulta) {
+    protected static function ejecutar_consulta_simple($consulta) {
         $sql = self::conectar()->prepare($consulta);
         $sql->execute();
         return $sql;
