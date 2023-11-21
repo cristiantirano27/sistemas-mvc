@@ -25,39 +25,39 @@
 <!-- Content -->
 <div class="container-fluid">
     <form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/userAjax.php" method="POST" data-form="save" autocomplete="off">
-        <fieldset>
+    <fieldset>
             <legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_no_id" class="bmd-label-floating">No. Identificación</label>
-                            <input type="text"  class="form-control" name="usuario_no_id_reg" id="usuario_no_id" maxlength="20" >
+                            <input type="text" pattern="[0-9]{7,12}" class="form-control" name="usuario_no_id_reg" id="usuario_no_id" maxlength="12" required="">
                         </div>
                     </div>
                     
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-                            <input type="text"  class="form-control" name="usuario_nombre_reg" id="usuario_nombre" maxlength="35" >
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}" class="form-control" name="usuario_nombre_reg" id="usuario_nombre" maxlength="20" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-                            <input type="text"  class="form-control" name="usuario_apellido_reg" id="usuario_apellido" maxlength="35" >
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}" class="form-control" name="usuario_apellido_reg" id="usuario_apellido" maxlength="20" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-                            <input type="text" " class="form-control" name="usuario_telefono_reg" id="usuario_telefono" maxlength="20" >
+                            <input type="text" pattern="[0-9()+]{13,15}" class="form-control" name="usuario_telefono_reg" id="usuario_telefono" maxlength="15" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-                            <input type="text"  class="form-control" name="usuario_direccion_reg" id="usuario_direccion" maxlength="190" >
+                            <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{15,40}" class="form-control" name="usuario_direccion_reg" id="usuario_direccion" maxlength="40" required="">
                         </div>
                     </div>
                 </div>
@@ -71,25 +71,25 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_usuario" class="bmd-label-floating">Nombre de usuario</label>
-                            <input type="text"  class="form-control" name="usuario_usuario_reg" id="usuario_usuario" maxlength="35" >
+                            <input type="text" pattern="[a-zA-ZÑñ ]{4,35}" class="form-control" name="usuario_usuario_reg" id="usuario_usuario" maxlength="35">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_email" class="bmd-label-floating">Email</label>
-                            <input type="email" class="form-control" name="usuario_email_reg" id="usuario_email" maxlength="70" >
+                            <input type="email" class="form-control" name="usuario_email_reg" id="usuario_email" maxlength="70">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_contrasenia_1" class="bmd-label-floating">Contraseña</label>
-                            <input type="password" class="form-control" name="usuario_contrasenia_1_reg" id="usuario_contrasenia_1"  maxlength="100"  >
+                            <input type="password" class="form-control" name="usuario_contrasenia_1_reg" id="usuario_contrasenia_1" pattern="[a-zA-ZÑñ0-9@.-_#]{8,100}" maxlength="100" required="" >
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_contrasenia_2" class="bmd-label-floating">Repetir contraseña</label>
-                            <input type="password" class="form-control" name="usuario_contrasenia_2_reg" id="usuario_contrasenia_2"  maxlength="100"  >
+                            <input type="password" class="form-control" name="usuario_contrasenia_2_reg" id="usuario_contrasenia_2" pattern="[a-zA-ZÑñ0-9@.-_#]{8,100}" maxlength="100" required="" >
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                         <p><span class="badge badge-success">Edición</span> Permisos para registrar y actualizar</p>
                         <p><span class="badge badge-dark">Registrar</span> Solo permisos para registrar</p>
                         <div class="form-group">
-                            <select class="form-control" name="usuario_privilegio_reg" >
+                            <select class="form-control" name="usuario_privilegio_reg">
                                 <option value="" selected="" disabled="">Seleccione una opción</option>
                                 <option value="1">Control total</option>
                                 <option value="2">Edición</option>
