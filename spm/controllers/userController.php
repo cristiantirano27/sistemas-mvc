@@ -41,13 +41,137 @@
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ha ocurrido un error",
-                    "Texto" => "El campo <b>No. Identificación</b> no coincide con el formato solicitado",
+                    "Texto" => "El campo No. Identificación no coincide con el formato solicitado",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
                 exit();
             }
+
+            if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}", $nombre)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Nombres no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}", $apellido)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Apellidos no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[0-9()+]{13,15}", $telefono)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Teléfono no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{15,40}", $direccion)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Dirección no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZÑñ ]{4,35}", $usuario)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Usuario no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZÑñ0-9@.-_#]{8,100}", $contrasenia1) || mainModel::verificar_datos("[a-zA-ZÑñ0-9@.-_#]{8,100}", $contrasenia2)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "Los campo Contraseña y Repetir contraseña no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            /* Comprobando número de identificación */
+            $check_no_id = mainModel::ejecutar_consulta_simple("SELECT usuario_num_id FROM usuario WHERE usuario_num_id = '$no_identificacion';");
+
+            if ($check_no_id->rowCount() > 0) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El Número de Identificación ingresado ya existe",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            /* Comprobando usuario */
+            $check_usuario = mainModel::ejecutar_consulta_simple("SELECT usuario_usuario FROM usuario WHERE usuario_usuario = '$usuario';");
+
+            if ($check_usuario->rowCount() > 0) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El Usuario ingresado ya existe",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            /* Comprobando email */
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $check_email = mainModel::ejecutar_consulta_simple("SELECT usuario_email FROM usuario WHERE usuario_email='$email';");
+
+                if ($check_email->rowCount()>0) {
+                    $alerta = [
+                        "Alerta" => "simple",
+                        "Titulo" => "Ha ocurrido un error",
+                        "Texto" => "El Email ingresado ya existe",
+                        "Tipo" => "error"
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            } else {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El Correo ingresado no es válido",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
             
-        }
+            
+        } /* Fin del controlador */
+
+
     }
     
+
