@@ -7,7 +7,7 @@
         /* Modelo agregar usuario */
         protected  static function agregar_usuario_modelo($datos)
         {
-            $sql = mainModel::conectar()->prepare("INSERT INTO (usuario_num_id, usuario_nombre, usuario_apellido, usuario_telefono, usuario_direccion, usuario_email, usuario_usuario, usuario_contrasenia, usuario_estado, usuario_privilegio) VALUES(:NumId, :Nombre, :Apellido, :Telefono, :Direccion, :Email, :Usuario, :Contrasenia, :Estado, :Privilegio);");
+            $sql = mainModel::conectar()->prepare("INSERT INTO usuario (usuario_num_id, usuario_nombre, usuario_apellido, usuario_telefono, usuario_direccion, usuario_email, usuario_usuario, usuario_contrasenia, usuario_estado, usuario_privilegio) VALUES(:NumId, :Nombre, :Apellido, :Telefono, :Direccion, :Email, :Usuario, :Contrasenia, :Estado, :Privilegio);");
             $sql->bindParam(":NumId", $datos['NumId']);
             $sql->bindParam(":Nombre", $datos['Nombre']);
             $sql->bindParam(":Apellido", $datos['Apellido']);
