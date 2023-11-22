@@ -22,7 +22,7 @@
             $contrasenia1 = mainModel::limpiar_cadena($_POST['usuario_contrasenia_1_reg']);
             $contrasenia2 = mainModel::limpiar_cadena($_POST['usuario_contrasenia_2_reg']);
 
-            $privilegios = mainModel::limpiar_cadena($_POST['usuario_privilegio_reg']);
+            $privilegio = mainModel::limpiar_cadena($_POST['usuario_privilegio_reg']);
             
             /* Comprobar campos vacios */
             if ($no_identificacion == "" || $nombre == "" || $apellido == "" || $telefono == "" || $direccion == "" || $usuario == "" || $email == "" || $contrasenia1 == "" || $contrasenia2 == "") {
@@ -70,7 +70,7 @@
                 exit();
             }
 
-            if (mainModel::verificar_datos("[0-9()+]{13,15}", $telefono)) {
+            if (mainModel::verificar_datos("[0-9()+ ]{13,15}", $telefono)) {
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ha ocurrido un error",
@@ -160,14 +160,70 @@
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ha ocurrido un error",
-                    "Texto" => "El Correo ingresado no es válido",
+                    "Texto" => "El Email ingresado no es válido",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
                 exit();
             }
 
+            /* Comprobando contraseñas */
+            if ($contrasenia1 != $contrasenia2) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "Las Contraseñas ingresadas no coinciden",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            } else {
+                $contrasenia = mainModel::encryption($contrasenia1);
+            }
             
+            /* Comprobando privilegios */
+            if ($privilegio<1 || $privilegio>3) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El Privilegio seleccionado no es válido",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+            
+            $datos_usuario_reg = [
+                "NumId" => $no_identificacion,
+                "Nombre" => $nombre,
+                "Apellido" => $apellido,
+                "Telefono" => $telefono,
+                "Direccion" => $direccion,
+                "Email" => $email,
+                "Usuario" => $usuario,
+                "Contrasenia" => $contrasenia,
+                "Estado" => "Activo",
+                "Privilegio" => $privilegio,
+            ];
+
+            $agregar_usuario = userModel::agregar_usuario_modelo($datos_usuario_reg);
+
+            if ($agregar_usuario->rowCount()==1) {
+                $alerta = [
+                    "Alerta" => "limpiar",
+                    "Titulo" => "Usuario registrado",
+                    "Texto" => "El Usuario ha sido registrado correctamente",
+                    "Tipo" => "success"
+                ];
+            } else {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "No se ha podido registrar el usuario. Verifique los datos ingresados e intente nuevamente",
+                    "Tipo" => "error"
+                ];
+            }
+            echo json_encode($alerta);
             
         } /* Fin del controlador */
 
