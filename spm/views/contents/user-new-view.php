@@ -51,7 +51,7 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-                            <input type="text" pattern="[0-9()+]{13,15}" class="form-control" name="usuario_telefono_reg" id="usuario_telefono" maxlength="15" required="">
+                            <input type="text" pattern="[0-9()+ ]{13,15}" class="form-control" name="usuario_telefono_reg" id="usuario_telefono" maxlength="15" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
