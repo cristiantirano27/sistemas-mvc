@@ -18,6 +18,15 @@
 		if ($vistas == "login" || $vistas == "404") {
 			require_once "./views/contents/".$vistas."-view.php";
 		} else {
+			session_start(['name' => 'LS']);
+
+			require_once "./controllers/loginController.php";
+			$lc = new loginController();
+
+			if (!isset($_SESSION['token_spm']) || !isset($_SESSION['usuario_spm']) || !isset($_SESSION['privilegio_spm']) || !isset($_SESSION['id_spm'])) {
+				echo $lc->forzar_cierre_sesion_controlador();
+				exit();
+			}
 		?>
 			<!-- Main container -->
 			<main class="full-box main-container">
