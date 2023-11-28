@@ -19,3 +19,12 @@
         </form>
     </div>
 </div>
+<?php
+    if (isset($_POST['usuario_log']) && isset($_POST['contrasenia_log'])) {
+        require_once "./controllers/loginController.php";
+
+        $ins_login = new loginController();
+        
+        echo $ins_login->iniciar_sesion_controlador();
+    }
+?>
