@@ -31,7 +31,7 @@ $(document).ready(function(){
 	});
 
 	/*  Exit system buttom */
-	$('.btn-exit-system').on('click', function(e){
+	/* $('.btn-exit-system').on('click', function(e){
 		e.preventDefault();
 		Swal.fire({
 			title: 'Are you sure to close the session?',
@@ -47,7 +47,7 @@ $(document).ready(function(){
 				window.location="index.html";
 			}
 		});
-	});
+	}); */
     
 });
 (function($){
