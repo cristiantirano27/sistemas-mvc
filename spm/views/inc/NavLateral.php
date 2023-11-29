@@ -29,7 +29,7 @@
                         </li>
                     </ul>
                 </li>
-
+            
                 <li>
                     <a href="#" class="nav-btn-submenu"><i class="fas fa-pallet fa-fw"></i> &nbsp; Items <i class="fas fa-chevron-down"></i></a>
                     <ul>
@@ -65,7 +65,7 @@
                         </li>
                     </ul>
                 </li>
-
+                <?php if ($_SESSION['privilegio_spm']) { ?>
                 <li>
                     <a href="#" class="nav-btn-submenu"><i class="fas  fa-user-secret fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
                     <ul>
@@ -80,7 +80,7 @@
                         </li>
                     </ul>
                 </li>
-
+                <?php } ?>
                 <li>
                     <a href="<?php echo SERVERURL ?>company/"><i class="fas fa-store-alt fa-fw"></i> &nbsp; Empresa</a>
                 </li>
