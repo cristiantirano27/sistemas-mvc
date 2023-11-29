@@ -87,7 +87,7 @@
             
         } /* Fin del controlador */
 
-        /* Controlador para iniciar sesión */
+        /* Controlador para forzar cierre de sesión */
         public function forzar_cierre_sesion_controlador() 
         {
             session_unset();
@@ -97,7 +97,32 @@
                 return "<script> window.location.href='".SERVERURL."login/'; </script>";
             } else {
                 return header("Location: ".SERVERURL."login/");
-            } /* Fin controlador */
+            } 
             
+        } /* Fin del controlador */
+        
+        /* Controlador para cerrar sesión */
+        public function cerrar_sesion_controlador() {
+            session_start(['name' => 'LS']);
+            $token = mainModel::decryption($_POST['token']);
+            $usuario = mainModel::decryption($_POST['usuario']);
+
+            if ($token == $_SESSION['token_spm'] && $usuario == $_SESSION['usuario_spm']) {
+                session_unset();
+                session_destroy();
+
+                $alerta = [
+                    "Alerta" => "redireccionar",
+                    "URL" => SERVERURL."login/" 
+                ];
+            } else {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "No se ha podido cerrar la sesión.",
+                    "Tipo" => "error"
+                ];
+            }
+            echo json_encode($alerta);
         } /* Fin del controlador */
     }
