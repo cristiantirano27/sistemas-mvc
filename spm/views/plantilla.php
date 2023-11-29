@@ -43,6 +43,7 @@
 			</section>
 		</main>
 		<?php 
+				include "./views/inc/Logout.php"; 
 			}
 			include "./views/inc/Scripts.php"; 
 		?>
