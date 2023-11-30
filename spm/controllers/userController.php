@@ -242,6 +242,22 @@
 
             $pagina = (isset($pagina) && $pagina > 0) ? (int) $pagina : 1;
             $inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
+        
+            if (isset($busqueda) && $busqueda != "") {
+                $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM usuario WHERE ((usuario_id != '$id' AND usuario_id != '1') AND (usuario_num_id LIKE '%$busqueda%' OR usuario_nombre LIKE '%$busqueda%' OR usuario_apellido LIKE '%$busqueda%' OR usuario_num_id LIKE '%$busqueda%' OR usuario_telefono LIKE '%$busqueda%' OR usuario_telefono LIKE '%$busqueda%' OR usuario_email LIKE '%$busqueda%' OR usuario_usuario LIKE '%$busqueda%')) ORDER BY usuario_nombre ASC LIMIT $inicio, $registros;";
+            } else {
+                $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM usuario WHERE usuario_id != '$id' AND usuario_id != '1' ORDER BY usuario_nombre ASC LIMIT $inicio, $registros;";
+            }
+            
+            $conexion = mainModel::conectar();
+
+            $datos = $conexion->query($consulta);
+            $datos = $datos->fetchAll();
+
+            $total = $conexion->query("SELECT FOUN_ROWS();");
+            $total = (int) $total->fetchColumn();
+
+            $nPaginas = ceil($total / $registros); 
         }
     }
     
