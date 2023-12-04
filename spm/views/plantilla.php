@@ -20,6 +20,8 @@
 		} else {
 			session_start(['name' => 'LS']);
 
+			$pagina = explode("/", $_GET['views']);
+
 			require_once "./controllers/loginController.php";
 			$lc = new loginController();
 
