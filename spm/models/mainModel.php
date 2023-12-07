@@ -108,11 +108,11 @@ class mainModel
             <a class="page-link" ><i class="fas fa-angle-double-left"></i></a>
         </li>';
         } else {
-            $tabla .= '<li class="page-item ">
+            $tabla .= '<li class="page-item">
             <a class="page-link" href="'.$url.'1/"><i class="fas fa-angle-double-left"></i></a>
         </li>
         <li class="page-item ">
-            <a class="page-link" href="'.$url.($pagina-1).'/">Anterior</i></a>
+            <a class="page-link" href="'.$url.($pagina-1).'/">Anterior</a>
         </li>';
         }
 
@@ -134,10 +134,10 @@ class mainModel
                         <a class="page-link" ><i class="fas fa-angle-double-right"></i></a>
                        </li>';
         } else {
-            $tabla .= '<li class="page-item ">
+            $tabla .= '<li class="page-item">
                         <a class="page-link" href="'.$url.($pagina+1).'/"><i class="fas fa-angle-double-right"></i></a>
                        </li>
-                       <li class="page-item ">
+                       <li class="page-item">
                         <a class="page-link" href="'.$url.$Npaginas.'/">Siguiente</a>
                        </li>';
         }
