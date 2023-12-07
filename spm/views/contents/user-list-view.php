@@ -34,6 +34,6 @@
         require_once "./controllers/userController.php";
         $ins_usuario = new userController();
 
-        echo $ins_usuario->paginador_usuario_controlador($pagina[1],1,$_SESSION['privilegio_spm'],$_SESSION['id_spm'],$pagina[0], "");
+        echo $ins_usuario->paginador_usuario_controlador($pagina[1],5,$_SESSION['privilegio_spm'],$_SESSION['id_spm'],$pagina[0], "");
     ?>
 </div>
