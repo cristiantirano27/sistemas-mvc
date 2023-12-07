@@ -330,16 +330,94 @@
                         </table>
                        </div>';
 
-            if ($total >= 1) {
-                $tabla .= '<p class="text-right">Mostrando usuarios '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p>';
-            }
 
             if ($total >= 1 && $pagina <= $Npaginas) {
+                $tabla .= '<p class="text-right">Mostrando usuarios '.$reg_inicio.' al '.$reg_final.' de un total de '.$total.'</p>';
                 $tabla .= mainModel::paginador_tablas($pagina, $Npaginas, $url, 7);
             }
 
             return $tabla;
 
+        } /* Fin del controlador */
+        
+        /* Controlador eliminar usuarios */
+        public function eliminar_usuario_controlador() {
+            /* Recibiendo id del usuario */
+            $id = mainModel::decryption($_POST['usuario_id_del']);
+            $id = mainModel::limpiar_cadena($id);
+
+            /* Comprobando el usuario principal */
+            if ($id == 1) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "No se ha podido eliminar el usuario principal.",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            /* Comprobando el usuario en BD */
+            $check_usuario = mainModel::ejecutar_consulta_simple("SELECT usuario_id FROM usuario WHERE usuario_id='$id';");
+
+            if ($check_usuario->rowCount() <= 0) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El usuario que intenta eliminar no existe.",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            /* Comprobando los préstamos en BD */
+            $check_prestamos = mainModel::ejecutar_consulta_simple("SELECT usuario_id FROM prestamo WHERE usuario_id='$id' LIMIT 1;");
+
+            if ($check_prestamos->rowCount() > 0) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "No se ha podido eliminar el usuario debido a que tiene préstamos asociados. Se recomienda desactivar el usuario si este no va a ser utilizado nuevamente.",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            /* Comprobando los privilegios */
+            session_start(['name' => 'LS']);
+            
+            if ($_SESSION['privilegio_spm'] != 1) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "No cuenta con los permisos necesarios para realizar esta operación.",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            $eliminar_usuario = userModel::eliminar_usuario_modelo($id);
+            
+            if ($eliminar_usuario->rowCount() == 1) {
+                $alerta = [
+                    "Alerta" => "recargar",
+                    "Titulo" => "Usuario eliminado",
+                    "Texto" => "El Usuario ha sido eliminado correctamente",
+                    "Tipo" => "success"
+                ];
+            } else {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "No se ha podido eliminar el usuario. Verifique los datos ingresados e intente nuevamente",
+                    "Tipo" => "error"
+                ];
+            }
+            echo json_encode($alerta);
         } /* Fin del controlador */
     }
     
