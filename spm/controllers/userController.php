@@ -9,8 +9,7 @@
     class userController extends userModel
     {
         /* Controlador agregar usuario */
-        public function agregar_usuario_controlador()
-        {
+        public function agregar_usuario_controlador() {
             $no_identificacion = mainModel::limpiar_cadena($_POST['usuario_no_id_reg']);
             $nombre = mainModel::limpiar_cadena($_POST['usuario_nombre_reg']);
             $apellido = mainModel::limpiar_cadena($_POST['usuario_apellido_reg']);
@@ -419,6 +418,16 @@
             }
             echo json_encode($alerta);
         } /* Fin del controlador */
+    
+        /* Controlador datos usuario */
+        public function datos_usuario_controlador($tipo, $id) {
+            $tipo = mainModel::limpiar_cadena($tipo);
+
+            $id = mainModel::decryption($id);
+            $id = mainModel::limpiar_cadena($id);
+
+            return userModel::datos_usuario_modelo($tipo, $id);
+        }
     }
     
 
