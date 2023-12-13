@@ -46,5 +46,26 @@
 
             return $sql;
         }
+
+        /* Modelo datos usuario */
+        protected  static function actualizar_usuario_modelo($datos)
+        {
+            $sql = mainModel::conectar()->prepare("UPDATE usuario SET usuario_num_id=:NumId, usuario_nombre=:Nombre, usuario_apellido=:Apellido, usuario_telefono=:Telefono, usuario_direccion=:Direccion, usuario_email=:Email, usuario_usuario=:Usuario, usuario_contrasenia=:Contrasenia, usuario_estado=:Estado, usuario_privilegio=:Privilegio WHERE usuario_id=:ID;");
+            $sql->bindParam(":NumId", $datos['NumId']);
+            $sql->bindParam(":Nombre", $datos['Nombre']);
+            $sql->bindParam(":Apellido", $datos['Apellido']);
+            $sql->bindParam(":Telefono", $datos['Telefono']);
+            $sql->bindParam(":Direccion", $datos['Direccion']);
+            $sql->bindParam(":Email", $datos['Email']);
+            $sql->bindParam(":Usuario", $datos['Usuario']);
+            $sql->bindParam(":Contrasenia", $datos['Contrasenia']);
+            $sql->bindParam(":Estado", $datos['Estado']);
+            $sql->bindParam(":Privilegio", $datos['Privilegio']);
+            $sql->bindParam(":ID", $datos['ID']);
+            $sql->execute();
+
+            return $sql;
+            
+        }
     }
     
