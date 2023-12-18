@@ -77,13 +77,13 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_usuario" class="bmd-label-floating">Nombre de usuario</label>
-                            <input type="text" pattern="[a-zA-ZÑñ ]{4,35}" class="form-control" name="usuario_usuario_reg" id="usuario_usuario" maxlength="35">
+                            <input type="text" pattern="[a-zA-ZÑñ ]{4,35}" class="form-control" name="usuario_usuario_reg" id="usuario_usuario" maxlength="35" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_email" class="bmd-label-floating">Email</label>
-                            <input type="email" class="form-control" name="usuario_email_reg" id="usuario_email" maxlength="70">
+                            <input type="email" class="form-control" name="usuario_email_reg" id="usuario_email" maxlength="70" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
@@ -111,7 +111,7 @@
                         <p><span class="badge badge-success">Edición</span> Permisos para registrar y actualizar</p>
                         <p><span class="badge badge-dark">Registrar</span> Solo permisos para registrar</p>
                         <div class="form-group">
-                            <select class="form-control" name="usuario_privilegio_reg">
+                            <select class="form-control" name="usuario_privilegio_reg" required="">
                                 <option value="" selected="" disabled="">Seleccione una opción</option>
                                 <option value="1">Control total</option>
                                 <option value="2">Edición</option>
