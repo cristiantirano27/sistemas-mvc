@@ -227,10 +227,10 @@
         } /* Fin del controlador */
 
         /* Controlador páginar usuarios */
-        public function paginador_usuario_controlador($pagina, $registros, $privilegios, $id, $url, $busqueda) {
+        public function paginador_usuario_controlador($pagina, $registros, $privilegio, $id, $url, $busqueda) {
             $pagina = mainModel::limpiar_cadena($pagina);
             $registros = mainModel::limpiar_cadena($registros);
-            $privilegios = mainModel::limpiar_cadena($privilegios);
+            $privilegio = mainModel::limpiar_cadena($privilegio);
             $id = mainModel::limpiar_cadena($id);
             
             $url = mainModel::limpiar_cadena($url);
@@ -427,7 +427,216 @@
             $id = mainModel::limpiar_cadena($id);
 
             return userModel::datos_usuario_modelo($tipo, $id);
-        }
+        } /* Fin del controlador */
+        
+        /* Controlador actualizar usuario */
+        public function actualizar_usuario_controlador(){
+            // Recibiendo el id
+            $id = mainModel::decryption($_POST['usuario_id_up']);
+            $id = mainModel::limpiar_cadena($id);
+
+            // Comprobar el usuario en la BD
+            $check_usuario = mainModel::ejecutar_consulta_simple("SELECT * FROM usuario WHERE usuario_id='$id';");
+            if ($check_usuario->rowCount()<=0) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "No se ha encontrado el usuario.",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            } else {
+                $campos = $check_usuario->fetch();
+            }
+
+            $no_identificacion = mainModel::limpiar_cadena($_POST['usuario_no_id_up']);
+            $nombre = mainModel::limpiar_cadena($_POST['usuario_nombre_up']);
+            $apellido = mainModel::limpiar_cadena($_POST['usuario_apellido_up']);
+            $telefono = mainModel::limpiar_cadena($_POST['usuario_telefono_up']);
+            $direccion = mainModel::limpiar_cadena($_POST['usuario_direccion_up']);
+
+            $usuario = mainModel::limpiar_cadena($_POST['usuario_usuario_up']);
+            $email = mainModel::limpiar_cadena($_POST['usuario_email_up']);
+            
+            if (isset($_POST['usuario_estado_up'])) {
+                $estado = mainModel::limpiar_cadena($_POST['usuario_estado_up']);
+            } else {
+                $estado = $campos['usuario_estado'];
+            }
+
+            if (isset($_POST['usuario_privilegio_up'])) {
+                $privilegio = mainModel::limpiar_cadena($_POST['usuario_privilegio_up']);
+            } else {
+                $privilegio = $campos['usuario_privilegio'];
+            }
+
+            $admin_usuario = mainModel::limpiar_cadena($_POST['usuario_admin']);
+            
+            $admin_contrasenia = mainModel::limpiar_cadena($_POST['contrasenia_admin']);
+            
+            $tipo_cuenta = mainModel::limpiar_cadena($_POST['tipo_cuenta']);
+            
+            /* Comprobar campos vacios */
+            if ($no_identificacion == "" || $nombre == "" || $apellido == "" || $telefono == "" || $direccion == "" || $usuario == "" || $admin_usuario == "" || $admin_contrasenia == "") {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "No pueden existir campos vacíos en el formulario",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            /* Verificando integridad de los datos */
+            if (mainModel::verificar_datos("[0-9]{7,12}", $no_identificacion)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo No. Identificación no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}", $nombre)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Nombres no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}", $apellido)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Apellidos no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[0-9()+ ]{13,15}", $telefono)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Teléfono no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{15,40}", $direccion)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Dirección no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZÑñ ]{4,35}", $usuario)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El campo Usuario no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZÑñ ]{4,35}", $admin_usuario)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "Su Nombre de usuario no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[a-zA-ZÑñ0-9@.-_#]{8,100}", $admin_usuario)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "Su Contraseña no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            $admin_contrasenia = mainModel::encryption($admin_contrasenia);
+            
+            if ($privilegio<1 || $privilegio>3) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El Privilegio no es válido",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if ($estado != "Activo" && $estado != "Inactivo") {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ha ocurrido un error",
+                    "Texto" => "El Estado de la cuenta no coincide con el formato solicitado",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            // Comprobando numero de documento
+            if ($no_identificacion != $campos['usuario_num_id']) {
+                $check_no_id = mainModel::ejecutar_consulta_simple("SELECT usuario_num_id FROM usuario WHERE usuario_num_id = '$no_identificacion';");
+
+                if ($check_no_id->rowCount() > 0) {
+                    $alerta = [
+                        "Alerta" => "simple",
+                        "Titulo" => "Ha ocurrido un error",
+                        "Texto" => "El Número de Identificación ingresado ya existe",
+                        "Tipo" => "error"
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            }
+            
+            // Comprobando usuario
+            if ($usuario != $campos['usuario_usuario']) {
+                $check_usuario = mainModel::ejecutar_consulta_simple("SELECT usuario_usuario FROM usuario WHERE usuario_usuario = '$usuario';");
+
+                if ($check_usuario->rowCount() > 0) {
+                    $alerta = [
+                        "Alerta" => "simple",
+                        "Titulo" => "Ha ocurrido un error",
+                        "Texto" => "El Usuario ingresado ya existe",
+                        "Tipo" => "error"
+                    ];
+                    echo json_encode($alerta);
+                    exit();
+                }
+            }
+            
+        } /* Fin del controlador */
+
+
     }
     
 
