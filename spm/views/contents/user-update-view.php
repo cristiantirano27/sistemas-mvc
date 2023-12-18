@@ -52,32 +52,32 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_no_id" class="bmd-label-floating">No. Identificación</label>
-                            <input type="text" pattern="[0-9]{7,12}" class="form-control" name="usuario_no_id_up" id="usuario_no_id" maxlength="12" value="<?php echo $campos['usuario_num_id']; ?>">
+                            <input type="text" pattern="[0-9]{7,12}" class="form-control" name="usuario_no_id_up" id="usuario_no_id" maxlength="12" value="<?php echo $campos['usuario_num_id']; ?>" required="">
                         </div>
                     </div>
                     
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}" class="form-control" name="usuario_nombre_up" id="usuario_nombre" maxlength="20" value="<?php echo $campos['usuario_nombre']; ?>">
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}" class="form-control" name="usuario_nombre_up" id="usuario_nombre" maxlength="20" value="<?php echo $campos['usuario_nombre']; ?>" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}" class="form-control" name="usuario_apellido_up" id="usuario_apellido" maxlength="20" value="<?php echo $campos['usuario_apellido']; ?>">
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,20}" class="form-control" name="usuario_apellido_up" id="usuario_apellido" maxlength="20" value="<?php echo $campos['usuario_apellido']; ?>" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-                            <input type="text" pattern="[0-9()+ ]{13,15}" class="form-control" name="usuario_telefono_up" id="usuario_telefono" maxlength="15" value="<?php echo $campos['usuario_telefono']; ?>" >
+                            <input type="text" pattern="[0-9()+ ]{13,15}" class="form-control" name="usuario_telefono_up" id="usuario_telefono" maxlength="15" value="<?php echo $campos['usuario_telefono']; ?>" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-                            <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{15,40}" class="form-control" name="usuario_direccion_up" id="usuario_direccion" maxlength="40" value="<?php echo $campos['usuario_direccion']; ?>">
+                            <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{15,40}" class="form-control" name="usuario_direccion_up" id="usuario_direccion" maxlength="40" value="<?php echo $campos['usuario_direccion']; ?>" required="">
                         </div>
                     </div>
                 </div>
@@ -91,13 +91,13 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_usuario" class="bmd-label-floating">Nombre de usuario</label>
-                            <input type="text" pattern="[a-zA-ZÑñ ]{4,35}" class="form-control" name="usuario_usuario_up" id="usuario_usuario" maxlength="35" value="<?php echo $campos['usuario_usuario']; ?>">
+                            <input type="text" pattern="[a-zA-ZÑñ ]{4,35}" class="form-control" name="usuario_usuario_up" id="usuario_usuario" maxlength="35" value="<?php echo $campos['usuario_usuario']; ?>" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_email" class="bmd-label-floating">Email</label>
-                            <input type="email" class="form-control" name="usuario_email_up" id="usuario_email" maxlength="70" value="<?php echo $campos['usuario_email']; ?>">
+                            <input type="email" class="form-control" name="usuario_email_up" id="usuario_email" maxlength="70" value="<?php echo $campos['usuario_email']; ?>" required="">
                         </div>
                     </div>
                     <?php if ($_SESSION['privilegio_spm'] == 1 && $campos['usuario_id'] != 1) { ?>
@@ -165,13 +165,13 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="usuario_admin" class="bmd-label-floating">Nombre de usuario</label>
-                            <input type="text" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_admin" id="usuario_admin" maxlength="35" required="" >
+                            <input type="text" pattern="[a-zA-ZÑñ ]{4,35}" class="form-control" name="usuario_admin" id="usuario_admin" maxlength="35" required="" >
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="contrasenia_admin" class="bmd-label-floating">Contraseña</label>
-                            <input type="password" class="form-control" name="contrasenia_admin" id="contrasenia_admin" pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="100" required="" >
+                            <input type="password" class="form-control" name="contrasenia_admin" id="contrasenia_admin" pattern="[a-zA-ZÑñ0-9@.-_#]{8,100}" maxlength="100" required="" >
                         </div>
                     </div>
                 </div>
