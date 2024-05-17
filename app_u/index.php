@@ -10,11 +10,13 @@
     }
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
     <?php require_once "./app/views/inc/head.php"; ?>
 </head>
 <body>
+    <h1 class="title">Title</h1>
+    <h2 class="subtitle">Subtitle</h2>
     <?php require_once "./app/views/inc/script.php"; ?>
 </body>
 </html>
