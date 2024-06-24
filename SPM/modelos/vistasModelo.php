@@ -5,7 +5,7 @@
         /* ------ Modelo obtener vistas ------ */
         protected static function obtener_vistas_modelo($vistas)
         {
-            $lista = [];
+            $lista = ['home', 'client-list', 'client-new', 'client-search', 'client-update', 'company', 'item-list', 'item-new', 'item-search', 'item-update', 'reservation-list', 'reservation-new', 'reservation-pending', 'reservation-reservation', 'reservation-search', 'reservation-update', 'user-list', 'user-new', 'user-search', 'user-update'];
             if (in_array($vistas, $lista)) {
                 if (is_file("./vistas/contenidos/".$vistas."-view.php")) {
                     $contenido = "./vistas/contenidos/".$vistas."-view.php";
