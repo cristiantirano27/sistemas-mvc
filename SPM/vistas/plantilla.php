@@ -7,6 +7,17 @@
     <?php require_once "./vistas/inc/Link.php"; ?>
 </head>
 <body>
+	<?php
+		$peticionAjax = false;
+		require_once "./controladores/vistasControlador.php";
+		$IV = new vistasControlador();
+
+		$vistas = $IV->obtener_vistas_controlador();
+
+		if ($vistas == "login" || $vistas == "404") {
+			require_once "./vistas/contenidos/".$vistas."-view.php";
+		} else {
+	?>
 	<!-- Main container -->
 	<main class="full-box main-container">
 		<!-- Nav lateral -->
@@ -14,9 +25,16 @@
 
 		<!-- Page content -->
 		<section class="full-box page-content">
-	        <?php require_once "./vistas/inc/NavBar.php"; ?>
+	        <?php 
+				require_once "./vistas/inc/NavBar.php"; 
+				
+				require_once $vistas;
+			?>
     	</section>
 	</main>
-	<?php require_once "./vistas/inc/Scripts.php"; ?>	
+	<?php 
+		}
+		require_once "./vistas/inc/Scripts.php"; 
+	?>	
 </body>
 </html>
